@@ -16,22 +16,16 @@ public class Vivienda implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
     private Integer price;
 
-    @NotEmpty
     private Integer meters;
 
-    @NotEmpty
     private String city;
 
-    @NotEmpty
     private String street;
 
-    @NotEmpty
     private Integer bedrooms;
 
-    @NotEmpty
     private Integer restrooms;
 
     public Long getId() {
