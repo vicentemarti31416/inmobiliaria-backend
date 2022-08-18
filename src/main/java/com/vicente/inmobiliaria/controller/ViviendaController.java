@@ -3,6 +3,8 @@ package com.vicente.inmobiliaria.controller;
 import com.vicente.inmobiliaria.entity.Vivienda;
 import com.vicente.inmobiliaria.service.ViviendaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,12 @@ public class ViviendaController {
     @GetMapping("/")
     public ResponseEntity<?> getViviendas() {
         return ResponseEntity.ok(viviendaService.getViviendas());
+    }
+
+    @GetMapping("/page/{page}")
+    public ResponseEntity<?> getViviendasPageable(@PathVariable Integer page) {
+        Page<Vivienda> viviendaPage = viviendaService.getViviendasPageable(PageRequest.of(page, 10));
+        return ResponseEntity.ok(viviendaPage);
     }
 
     @PostMapping("/")

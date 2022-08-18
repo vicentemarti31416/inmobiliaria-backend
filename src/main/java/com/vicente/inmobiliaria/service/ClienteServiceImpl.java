@@ -3,6 +3,8 @@ package com.vicente.inmobiliaria.service;
 import com.vicente.inmobiliaria.entity.Cliente;
 import com.vicente.inmobiliaria.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,12 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<Cliente> getClientesPageable(Pageable pageable) {
+        return clienteRepository.findAll(pageable);
+    }
+
+    @Override
     public Cliente addCliente(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
@@ -36,4 +44,5 @@ public class ClienteServiceImpl implements ClienteService {
     public void deleteCliente(Long id) {
         clienteRepository.deleteById(id);
     }
+
 }

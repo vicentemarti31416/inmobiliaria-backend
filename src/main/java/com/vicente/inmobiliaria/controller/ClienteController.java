@@ -3,6 +3,8 @@ package com.vicente.inmobiliaria.controller;
 import com.vicente.inmobiliaria.entity.Cliente;
 import com.vicente.inmobiliaria.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,12 @@ public class ClienteController {
     @GetMapping("/")
     public ResponseEntity<?> getClientes() {
         return ResponseEntity.ok(clienteService.getClientes());
+    }
+
+    @GetMapping("/page/{page}")
+    public ResponseEntity<?> getClientesPageable(@PathVariable Integer page) {
+        Page<Cliente> clientePage = clienteService.getClientesPageable(PageRequest.of(page, 10));
+        return ResponseEntity.ok(clientePage);
     }
 
     @PostMapping("/")

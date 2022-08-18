@@ -3,6 +3,8 @@ package com.vicente.inmobiliaria.service;
 import com.vicente.inmobiliaria.entity.Vivienda;
 import com.vicente.inmobiliaria.repository.ViviendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,12 @@ public class ViviendaServiceImpl implements ViviendaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<Vivienda> getViviendasPageable(Pageable pageable) {
+        return viviendaRepository.findAll(pageable);
+    }
+
+    @Override
     public Vivienda addVivienda(Vivienda vivienda) {
         return viviendaRepository.save(vivienda);
     }
@@ -36,4 +44,5 @@ public class ViviendaServiceImpl implements ViviendaService {
     public void deleteVivienda(Long id) {
         viviendaRepository.deleteById(id);
     }
+
 }

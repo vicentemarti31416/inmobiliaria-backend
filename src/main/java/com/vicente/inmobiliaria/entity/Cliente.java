@@ -17,17 +17,12 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
     private String name;
 
-    @NotEmpty
     private String lastname;
 
-    @NotEmpty
     private Integer phone;
 
-    @NotEmpty
-    @Email
     @Column(unique = true)
     private String email;
 
