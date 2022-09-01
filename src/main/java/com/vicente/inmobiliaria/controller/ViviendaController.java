@@ -1,7 +1,7 @@
 package com.vicente.inmobiliaria.controller;
 
 import com.vicente.inmobiliaria.entity.Vivienda;
-import com.vicente.inmobiliaria.service.ViviendaService;
+import com.vicente.inmobiliaria.security.enums.service.ViviendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@Controller
+@RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/viviendas")
 public class ViviendaController {

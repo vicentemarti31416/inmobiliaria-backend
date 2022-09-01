@@ -1,4 +1,4 @@
-package com.vicente.inmobiliaria.service;
+package com.vicente.inmobiliaria.security.enums.service;
 
 import com.vicente.inmobiliaria.entity.Cliente;
 import org.springframework.data.domain.Page;
