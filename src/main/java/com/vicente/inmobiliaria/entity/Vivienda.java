@@ -1,9 +1,11 @@
 package com.vicente.inmobiliaria.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "viviendas")
@@ -27,6 +29,16 @@ public class Vivienda implements Serializable {
     private Integer bedrooms;
 
     private Integer restrooms;
+
+    private String picture;
+
+    @Lob
+    @JsonIgnore
+    private byte[] photo;
+
+    public Integer getphotoHashCode() {
+        return (this.photo != null && this.photo.length > 0)? Arrays.hashCode(this.photo) : null;
+    }
 
     public Long getId() {
         return id;
@@ -82,5 +94,21 @@ public class Vivienda implements Serializable {
 
     public void setRestrooms(Integer restrooms) {
         this.restrooms = restrooms;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 }

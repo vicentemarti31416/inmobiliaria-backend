@@ -2,7 +2,6 @@ package com.vicente.inmobiliaria.security.service;
 
 import com.vicente.inmobiliaria.security.entity.Role;
 import com.vicente.inmobiliaria.security.entity.User;
-
 import java.util.List;
 
 public interface UserService {

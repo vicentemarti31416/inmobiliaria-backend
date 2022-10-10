@@ -11,21 +11,17 @@ import com.vicente.inmobiliaria.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.util.Arrays.stream;
 
 @RestController
 @RequestMapping("/auth")
@@ -42,18 +38,21 @@ public class UserController {
 
     @PostMapping("/users/save")
     public ResponseEntity<User> save(@Validated @RequestBody User user, BindingResult result) {
-        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/auth/users/save").toUriString());
+        return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
     @PostMapping("/roles/save")
     public ResponseEntity<Role> save(@Validated @RequestBody Role role, BindingResult result) {
-        return new ResponseEntity<>(userService.saveRole(role), HttpStatus.CREATED);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/auth/roles/save").toUriString());
+        return ResponseEntity.created(uri).body(userService.saveRole(role));
     }
 
     @PostMapping("/users/save/roles")
     public ResponseEntity<?> addRoleToUser(@RequestParam String username, @RequestParam String roleName) {
         userService.addRoleToUser(username, roleName);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/auth/users/save/roles").toUriString());
+        return ResponseEntity.created(uri).body(null);
     }
 
     @GetMapping("/users/refresh/token")
@@ -78,8 +77,7 @@ public class UserController {
                 tokens.put("refresh_token", refresh_token);
                 response.setContentType("application/json");
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-            } catch (
-                    Exception e) {
+            } catch (Exception e) {
                 response.setHeader("error", e.getMessage());
                 response.setStatus(HttpStatus.FORBIDDEN.value());
                 Map<String, Object> error = new HashMap<>();

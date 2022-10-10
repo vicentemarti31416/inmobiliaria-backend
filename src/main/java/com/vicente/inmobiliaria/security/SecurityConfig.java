@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.firewall.*;
-
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.*;
 
 @Configuration
@@ -49,11 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.cors().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS).and()
-                .authorizeRequests().antMatchers(GET, "/clientes/").permitAll().and()
+                /*.authorizeRequests().antMatchers(GET, "/clientes/").permitAll().and()
                 .authorizeRequests().antMatchers(GET, "/auth/users/refresh/token").permitAll().and()
+                .authorizeRequests().antMatchers(GET, "/viviendas/page/{id}").permitAll().and()
+                .authorizeRequests().antMatchers(GET, "/viviendas/{id}").hasAnyAuthority("ROLE_USER").and()
                 .authorizeRequests().antMatchers(GET, "/clientes/**").hasAnyAuthority("ROLE_ADMIN").and()
-                .authorizeRequests().anyRequest().authenticated().and()
+                .authorizeRequests().anyRequest().authenticated().and()*/
+                .authorizeRequests().anyRequest().permitAll().and()
                 .addFilter(new CustomAuthenticationFilter(authenticationManagerBean()))
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
