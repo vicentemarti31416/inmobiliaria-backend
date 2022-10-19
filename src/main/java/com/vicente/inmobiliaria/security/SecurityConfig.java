@@ -50,13 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS).and()
-                /*.authorizeRequests().antMatchers(GET, "/clientes/").permitAll().and()
-                .authorizeRequests().antMatchers(GET, "/auth/users/refresh/token").permitAll().and()
-                .authorizeRequests().antMatchers(GET, "/viviendas/page/{id}").permitAll().and()
-                .authorizeRequests().antMatchers(GET, "/viviendas/{id}").hasAnyAuthority("ROLE_USER").and()
-                .authorizeRequests().antMatchers(GET, "/clientes/**").hasAnyAuthority("ROLE_ADMIN").and()
-                .authorizeRequests().anyRequest().authenticated().and()*/
-                .authorizeRequests().anyRequest().permitAll().and()
+                .authorizeRequests().antMatchers(GET, "/viviendas/").permitAll()
+                .antMatchers(GET, "/auth/users/refresh/token").permitAll()
+                .antMatchers(GET, "/viviendas/page/{id}", "/viviendas/photo/{id}", "/viviendas/{id}").permitAll()
+                .antMatchers(GET, "/clientes/**").hasAnyAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated().and()
                 .addFilter(new CustomAuthenticationFilter(authenticationManagerBean()))
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
