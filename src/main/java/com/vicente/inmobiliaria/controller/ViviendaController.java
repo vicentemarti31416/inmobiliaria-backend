@@ -27,7 +27,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 @Controller
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(value = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("/viviendas")
 public class ViviendaController {
 
