@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -89,6 +90,7 @@ public class ViviendaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(viviendaService.addVivienda(viviendaDb));
     }
 
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/photo/{id}")
     public ResponseEntity<?> updateViviendaWithPhoto(@Validated Vivienda vivienda, BindingResult result, @PathVariable Long id, @RequestParam MultipartFile archivo) throws IOException {
         if (result.hasErrors()) this.validate(result);
